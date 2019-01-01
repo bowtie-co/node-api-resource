@@ -1,0 +1,30 @@
+{
+  "name": "@bowtie/api-resource",
+  "version": "0.0.1",
+  "description": "API Resource Framework",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bowtie-co/node-api-resource.git"
+  },
+  "author": "Charlie McClung",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bowtie-co/node-api-resource/issues"
+  },
+  "homepage": "https://github.com/bowtie-co/node-api-resource#readme",
+  "dependencies": {
+    "@bowtie/api": "^0.5.1",
+    "@bowtie/utils": "^0.3.1",
+    "dotenv": "^6.2.0",
+    "fs-extra": "^7.0.1",
+    "qs": "^6.6.0"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^5.2.0"
+  }
+}
