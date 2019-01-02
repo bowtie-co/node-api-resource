@@ -20,6 +20,7 @@ const config = {
   stage: process.env.API_STAGE,
   prefix: process.env.API_PREFIX,
   version: process.env.API_VERSION,
+  authorization: process.env.API_AUTHORIZATION || 'None',
   secureOnly: process.env.NODE_ENV === 'production',
   verbose: !!process.env.VERBOSE,
   defaultOptions: {
