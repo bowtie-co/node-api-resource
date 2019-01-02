@@ -23,6 +23,10 @@ class Resource {
       .then(resp => this)
   }
 
+  static get api() {
+    return api
+  }
+
   static get ModelName() {
     throw new Error('Not implemented')
   }

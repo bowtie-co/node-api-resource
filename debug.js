@@ -1,5 +1,3 @@
-require('dotenv').config()
-
 const { Resource } = require('./src/models')
 
 class Message extends Resource {
