@@ -1,9 +1,11 @@
 /* eslint-env mocha */
+/* eslint-disable no-unused-expressions */
 
 const { expect } = require('chai')
+const { ApiResource } = require('../../')
 
-define('ApiResource', async () => {
-  it('does stuff', async () => {
-    expect(true).to.be.ok
+describe('ApiResource', async () => {
+  it('exists', async () => {
+    expect(ApiResource).to.exist
   })
 })
