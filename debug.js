@@ -1,13 +1,13 @@
-const { Resource } = require('./src/models')
+const { ApiResource } = require('./src/models')
 
-class Message extends Resource {
-  static get ModelName() {
+class Message extends ApiResource {
+  static get ModelName () {
     return 'messages'
   }
 }
 
-class Template extends Resource {
-  static get ModelName() {
+class Template extends ApiResource {
+  static get ModelName () {
     return 'templates'
   }
 }
