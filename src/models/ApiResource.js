@@ -104,7 +104,7 @@ class ApiResource {
   static get (id, options = {}, parent = null) {
     return api.get(`${this.buildBaseRoute(parent)}/${id}`, options)
       .then(resp => resp.json())
-      .then(data => new this(data))
+      .then(data => new this(data, parent))
   }
 
   /**
