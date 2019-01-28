@@ -86,9 +86,7 @@ class ApiResource {
   static buildBaseRoute (parent) {
     let route = this.BaseRoute
 
-    if (parent instanceof String) {
-      route = `${parent}/${route}`
-    } else if (parent instanceof ApiResource) {
+    if (parent instanceof ApiResource) {
       route = `${parent._resourceRoute}/${route}`
     }
 
