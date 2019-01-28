@@ -16,28 +16,28 @@ class ApiResource {
 
     this._parent = parent
 
-    if (this._parent && !this._parent instanceof ApiResource) {
+    if (this._parent && !(this._parent instanceof ApiResource)) {
       throw new Error('parent must be an ApiResource!')
     }
   }
 
-  get _id() {
+  get _id () {
     return this.id
   }
 
-  get _baseRoute() {
+  get _baseRoute () {
     return this.constructor.buildBaseRoute(this._parent)
   }
 
-  get _resourceRoute() {
+  get _resourceRoute () {
     return `${this._baseRoute}/${this._id}`
   }
 
-  get _defaultOptions() {
+  get _defaultOptions () {
     return {}
   }
 
-  _options(extra = {}) {
+  _options (extra = {}) {
     return deepmerge(this._defaultOptions, extra)
   }
 
@@ -65,7 +65,7 @@ class ApiResource {
     return api.delete(`${this._baseRoute}/${this._id}`, this._options(options))
   }
 
-  get routePrefix() {
+  get routePrefix () {
     return `/${this._baseRoute}/${this._id}`
   }
 
@@ -83,7 +83,7 @@ class ApiResource {
     throw new Error('Not implemented')
   }
 
-  static buildBaseRoute(parent) {
+  static buildBaseRoute (parent) {
     let route = this.BaseRoute
 
     if (parent && parent instanceof ApiResource) {
