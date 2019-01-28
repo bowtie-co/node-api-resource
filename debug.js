@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 const { ApiResource } = require('./src/models')
 
 class Message extends ApiResource {

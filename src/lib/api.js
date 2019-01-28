@@ -28,4 +28,6 @@ const config = {
   }
 }
 
-module.exports = new Api(config)
+const api = new Api(config)
+
+module.exports = api
