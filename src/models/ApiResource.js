@@ -1,6 +1,6 @@
-// const qs = require('qs')
+const qs = require('qs')
 const deepmerge = require('deepmerge')
-const { api } = require('../lib')
+const Api = require('@bowtie/api')
 
 /**
  * Class ApiResource
@@ -48,7 +48,7 @@ class ApiResource {
    * @param {object} [options]
    */
   update (data = {}, options = {}) {
-    return api.put(`${this._baseRoute}/${this._id}`, data, this._options(options))
+    return this.api.put(`${this._baseRoute}/${this._id}`, data, this._options(options))
       .then(resp => resp.json())
       .then(data => {
         Object.assign(this, data)
@@ -62,29 +62,67 @@ class ApiResource {
    * @param {object} [options]
    */
   destroy (options = {}) {
-    return api.delete(`${this._baseRoute}/${this._id}`, this._options(options))
+    return this.api.delete(`${this._baseRoute}/${this._id}`, this._options(options))
   }
 
   get routePrefix () {
     return `/${this._baseRoute}/${this._id}`
   }
 
+  static get envConfig () {
+    const DEFAULT_HEADERS = {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    }
+
+    if (process.env.API_DEFAULT_HEADERS) {
+      Object.assign(DEFAULT_HEADERS, qs.parse(process.env.API_DEFAULT_HEADERS))
+    }
+
+    const config = {
+      root: process.env.API_ROOT_URL,
+      stage: process.env.API_STAGE,
+      prefix: process.env.API_PREFIX,
+      version: process.env.API_VERSION,
+      authorization: process.env.API_AUTHORIZATION || 'None',
+      secureOnly: process.env.NODE_ENV === 'production',
+      verbose: !!process.env.VERBOSE,
+      defaultOptions: {
+        headers: DEFAULT_HEADERS
+      }
+    }
+
+    Object.keys(config).forEach(configKey => {
+      if (typeof config[configKey] === 'undefined') {
+        delete config[configKey]
+      }
+    })
+
+    return config
+  }
+
+  get api () {
+    return this.constructor.api
+  }
+
   /**
    * API instance
    */
   static get api () {
-    return api
+    const config = deepmerge(this.apiConfig || {}, this.envConfig)
+
+    return new Api(config)
   }
 
   /**
-   * BaseRoute (used as path prefix for API requests)
+   * baseRoute (used as path prefix for API requests)
    */
-  static get BaseRoute () {
+  static get baseRoute () {
     throw new Error('Not implemented')
   }
 
   static buildBaseRoute (parent) {
-    let route = this.BaseRoute
+    let route = this.baseRoute
 
     if (parent instanceof ApiResource) {
       route = `${parent._resourceRoute}/${route}`
@@ -100,7 +138,7 @@ class ApiResource {
    * @param {object} [options]
    */
   static get (id, options = {}, parent = null) {
-    return api.get(`${this.buildBaseRoute(parent)}/${id}`, options)
+    return this.api.get(`${this.buildBaseRoute(parent)}/${id}`, options)
       .then(resp => resp.json())
       .then(data => new this(data, parent))
   }
@@ -112,7 +150,7 @@ class ApiResource {
    * @param {object} [options]
    */
   static create (data = {}, options = {}, parent = null) {
-    return api.post(`${this.buildBaseRoute(parent)}`, data, options)
+    return this.api.post(`${this.buildBaseRoute(parent)}`, data, options)
       .then(resp => resp.json())
       .then(data => new this(data, parent))
   }
@@ -123,7 +161,7 @@ class ApiResource {
    * @param {object} [options]
    */
   static all (options = {}, parent = null) {
-    return api.get(`${this.buildBaseRoute(parent)}`, options)
+    return this.api.get(`${this.buildBaseRoute(parent)}`, options)
       .then(resp => resp.json())
       .then(data => data.map(item => new this(item, parent)))
   }

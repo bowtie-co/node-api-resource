@@ -1,6 +1,6 @@
 const qs = require('qs')
 const Api = require('@bowtie/api')
-const { verifyRequired } = require('@bowtie/utils')
+const merge = require('deepmerge')
 
 const DEFAULT_HEADERS = {
   'Accept': 'application/json',
@@ -11,11 +11,7 @@ if (process.env.API_DEFAULT_HEADERS) {
   Object.assign(DEFAULT_HEADERS, qs.parse(process.env.API_DEFAULT_HEADERS))
 }
 
-verifyRequired(process.env, [
-  'API_ROOT_URL'
-])
-
-const config = {
+const defaultConfig = {
   root: process.env.API_ROOT_URL,
   stage: process.env.API_STAGE,
   prefix: process.env.API_PREFIX,
@@ -28,6 +24,6 @@ const config = {
   }
 }
 
-const api = new Api(config)
-
-module.exports = api
+module.exports = (config = {}) => {
+  return new Api(merge(defaultConfig, config))
+}
