@@ -24,10 +24,9 @@
   },
   "homepage": "https://github.com/bowtie-co/node-api-resource#readme",
   "dependencies": {
-    "@bowtie/api": "^0.6.0",
-    "@bowtie/utils": "^0.3.1",
+    "@bowtie/api": "^0.6.3",
+    "@bowtie/utils": "^0.3.3",
     "deepmerge": "^3.3.0",
-    "fs-extra": "^7.0.1",
     "qs": "^6.6.0"
   },
   "devDependencies": {

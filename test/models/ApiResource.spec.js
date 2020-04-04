@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-expressions */
 
 const { expect } = require('chai')
-const { ApiResource } = require('../../')
+const ApiResource = require('../../')
 
 describe('ApiResource', async () => {
   it('exists', async () => {

@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 const qs = require('qs')
 const deepmerge = require('deepmerge')
 const Api = require('@bowtie/api')
@@ -79,6 +81,9 @@ class ApiResource {
       Object.assign(DEFAULT_HEADERS, qs.parse(process.env.API_DEFAULT_HEADERS))
     }
 
+    /**
+     * [HIGH] TODO: Refactor, don't require env setup/usage ...
+     */
     const config = {
       root: process.env.API_ROOT_URL,
       stage: process.env.API_STAGE,
